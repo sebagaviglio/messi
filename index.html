@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="theme-color" content="#faf5e8">
+<title>Antes de llamarlo el mejor — Un ensayo sobre Messi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#faf6ea;
+    --canvas-deep:#f1e9d2;
+    --kraft:#ecdfbe;
+    --ink:#15130d;
+    --ink-soft:#5b5440;
+    --pine:#2f7256;
+    --pine-deep:#1f4e3b;
+    --rust:#c1431d;
+    --gold:#d79c2c;
+    --sky:#2f7da3;
+    --line:rgba(21,19,13,0.16);
+    --max:700px;
+    --maxw:1180px;
+    color-scheme: light;
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; color-scheme:light; background:var(--canvas); }
+
+  /* Hard guard: never let an injected dark scheme repaint this page */
+  @media (prefers-color-scheme: dark){
+    html, body{ background:var(--canvas) !important; color:var(--ink) !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, serif;
+    font-size:18px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+
+  /* paper grain */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:2000;
+    opacity:.3;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.03 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  ::selection{ background:var(--pine); color:var(--canvas);}
+
+  a{
+    color:var(--pine-deep);
+    text-decoration:none;
+    background-image:linear-gradient(var(--gold), var(--gold));
+    background-repeat:no-repeat;
+    background-position:0 100%;
+    background-size:0% 2px;
+    transition:background-size .35s ease;
+  }
+  a:hover{ background-size:100% 2px; }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 24px;
+  }
+  .wrap-wide{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--pine-deep);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px; height:1px;
+    background:var(--pine-deep);
+    display:inline-block;
+  }
+
+  p{ margin:0 0 1.1em 0; }
+  p.lead{
+    font-size:21px;
+    line-height:1.6;
+  }
+
+  /* ---------- progress bar ---------- */
+  #progress{
+    position:fixed; top:0; left:0; height:3px;
+    background:linear-gradient(90deg, var(--rust), var(--gold));
+    width:0%;
+    z-index:3000;
+    transition:width .08s linear;
+    box-shadow:0 0 8px rgba(217,156,44,0.6);
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion:reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ---------- header / nav tiny ---------- */
+  header.top{
+    position:sticky;
+    top:0;
+    z-index:2500;
+    padding:18px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    background:rgba(250,246,234,0.7);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    border-bottom:1px solid transparent;
+    transition:background .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  header.top.scrolled{
+    background:rgba(250,246,234,0.92);
+    border-bottom-color:var(--line);
+    box-shadow:0 6px 18px rgba(21,19,13,0.06);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:64px 24px 40px;
+    text-align:left;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-220px;
+    left:50%;
+    width:900px;
+    height:900px;
+    margin-left:-450px;
+    background:radial-gradient(circle, rgba(217,156,44,0.35) 0%, rgba(193,67,29,0.16) 38%, rgba(217,156,44,0) 70%);
+    filter:blur(10px);
+    animation:halo 16s ease-in-out infinite;
+    pointer-events:none;
+    z-index:0;
+  }
+  @keyframes halo{
+    0%, 100%{ transform:scale(1) translateY(0); opacity:.9; }
+    50%{ transform:scale(1.12) translateY(30px); opacity:1; }
+  }
+  .hero .wrap{ max-width:880px; position:relative; z-index:1; }
+  .hero .ghost-num{
+    position:absolute;
+    top:-40px;
+    right:-4vw;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:700;
+    font-size:min(58vw, 520px);
+    line-height:1;
+    color:var(--ink);
+    opacity:.05;
+    z-index:0;
+    pointer-events:none;
+    user-select:none;
+  }
+  @media (max-width:700px){ .hero .ghost-num{ display:none; } }
+  .hero .eyebrow{
+    opacity:0;
+    animation:fadeUp .8s ease forwards;
+  }
+  .hero h1{
+    font-size:clamp(52px, 10vw, 118px);
+    font-weight:900;
+    letter-spacing:-0.02em;
+    line-height:0.96;
+    margin:18px 0 28px;
+    overflow:hidden;
+  }
+  .hero h1 span{
+    display:block;
+    opacity:0;
+    transform:translateY(100%);
+    animation:lineUp .9s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  .hero h1 span:nth-child(2){ animation-delay:.12s; }
+  @keyframes lineUp{
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .hero .dek{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(19px,2.4vw,24px);
+    color:var(--ink-soft);
+    max-width:560px;
+    margin-bottom:36px;
+    line-height:1.45;
+    opacity:0;
+    animation:fadeUp .9s ease forwards;
+    animation-delay:.45s;
+  }
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .hero-meta{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:16px;
+    margin-top:8px;
+    opacity:0;
+    animation:fadeUp .9s ease forwards;
+    animation-delay:.65s;
+  }
+  .hero-meta b{ color:var(--rust); }
+  .scroll-cue{
+    margin-top:42px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    opacity:0;
+    animation:fadeUp .9s ease forwards;
+    animation-delay:.85s;
+  }
+  .scroll-cue .arrow{
+    display:inline-block;
+    animation:bob 1.8s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(6px); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero::before, .hero h1 span, .hero .dek, .hero-meta, .hero .eyebrow, .scroll-cue, .scroll-cue .arrow{
+      animation:none !important; opacity:1 !important; transform:none !important;
+    }
+  }
+
+  .intro{
+    padding:8px 24px 64px;
+  }
+  .intro .wrap{ max-width:640px; }
+
+  .signature-num{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--rust);
+    font-weight:600;
+  }
+
+  /* ---------- divider ---------- */
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 24px 48px;
+  }
+  .divider .ln{ flex:1; height:1px; background:var(--line); }
+  .divider span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  /* ---------- section heads ---------- */
+  section{ padding:0 0 76px; }
+  .section-head{ padding:0 24px 28px; max-width:var(--maxw); margin:0 auto; }
+  .section-head .wrap{ max-width:640px; padding:0; }
+  .section-head h2{
+    font-size:clamp(32px,5vw,46px);
+    margin:10px 0 18px;
+  }
+  .section-head .eyebrow{ margin-bottom:6px; }
+
+  /* ---------- argentina band ---------- */
+  .argentina{
+    background:linear-gradient(165deg, #0f2533 0%, #15364a 55%, #0f2533 100%);
+    color:#eef5f8;
+    padding:84px 24px 76px;
+    position:relative;
+    overflow:hidden;
+  }
+  .argentina::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .argentina .wrap-wide{ position:relative; z-index:1; }
+  .argentina .section-head{ padding:0 0 30px; }
+  .argentina .eyebrow{ color:#7fc4e8; }
+  .argentina .eyebrow::before{ background:#7fc4e8; }
+  .argentina h2{
+    color:#fdfaf2;
+    font-size:clamp(30px,4.6vw,44px);
+  }
+  .argentina .section-head p{
+    color:rgba(238,245,248,0.82);
+    font-size:17px;
+    max-width:680px;
+  }
+  .ar-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+  }
+  @media (max-width:980px){ .ar-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .ar-grid{ grid-template-columns:1fr; } }
+  .ar-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:6px;
+    padding:22px 18px 20px;
+    transition:transform .35s cubic-bezier(.22,1,.36,1), background .35s ease, border-color .35s ease;
+  }
+  .ar-card:hover{
+    transform:translateY(-6px);
+    background:rgba(255,255,255,0.09);
+    border-color:rgba(127,196,232,0.5);
+  }
+  .ar-card .ar-year{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:26px;
+    color:#7fc4e8;
+    margin-bottom:10px;
+  }
+  .ar-card h3{
+    color:#fdfaf2;
+    font-size:19px;
+    margin-bottom:2px;
+  }
+  .ar-card .ar-sport{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:rgba(238,245,248,0.55);
+    margin-bottom:12px;
+  }
+  .ar-card p{
+    font-size:14px;
+    line-height:1.55;
+    color:rgba(238,245,248,0.85);
+    margin-bottom:0;
+  }
+  .ar-card p + p{ margin-top:10px; }
+  .ar-note{
+    margin-top:34px;
+    max-width:760px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:18px;
+    line-height:1.55;
+    color:#fdfaf2;
+    border-left:3px solid #7fc4e8;
+    padding-left:18px;
+  }
+
+  /* ---------- interstitial stinger ---------- */
+  .stinger{
+    background:var(--rust);
+    color:var(--canvas);
+    padding:36px 24px;
+    text-align:center;
+  }
+  .stinger p{
+    margin:0;
+    max-width:640px;
+    margin-inline:auto;
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:clamp(20px,3vw,28px);
+    line-height:1.3;
+  }
+
+  /* ---------- stat card ---------- */
+  .tag{
+    background:var(--kraft);
+    border:1px solid rgba(21,19,13,0.18);
+    border-top:3px solid var(--rust);
+    border-radius:2px;
+    padding:24px 20px 18px;
+    position:relative;
+    box-shadow:0 2px 0 rgba(21,19,13,0.05);
+    transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, background .35s ease;
+  }
+  .tag:hover{
+    transform:translateY(-6px);
+    box-shadow:0 14px 22px rgba(21,19,13,0.14);
+    background:#f3e9c9;
+  }
+  .tag .tag-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:38px;
+    font-weight:600;
+    color:var(--rust);
+    line-height:1;
+    margin-bottom:6px;
+    transition:color .3s ease;
+  }
+  .tag:hover .tag-num{ color:var(--pine-deep); }
+  .tag .tag-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--pine-deep);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .tag .tag-desc{
+    font-family:'Source Serif 4', serif;
+    font-size:14.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+
+  /* ---------- featured stat banner ---------- */
+  .stat-feature{
+    max-width:var(--maxw);
+    margin:0 auto 18px;
+    padding:0 24px;
+  }
+  .stat-feature .inner{
+    background:linear-gradient(135deg, var(--pine-deep), #14352a);
+    color:var(--canvas);
+    border-radius:6px;
+    padding:34px 32px;
+    display:flex;
+    align-items:center;
+    gap:28px;
+    box-shadow:0 18px 30px rgba(15,19,13,0.18);
+  }
+  .stat-feature .sf-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:700;
+    font-size:clamp(64px,9vw,108px);
+    line-height:1;
+    color:#f3d98a;
+  }
+  .stat-feature .sf-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#cfe6da;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .stat-feature .sf-desc{
+    font-family:'Fraunces', serif;
+    font-size:18px;
+    line-height:1.4;
+    color:var(--canvas);
+    max-width:420px;
+  }
+  @media (max-width:600px){
+    .stat-feature .inner{ flex-direction:column; align-items:flex-start; gap:14px; }
+  }
+
+  /* ---------- stat grid ---------- */
+  .stat-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  @media (max-width:860px){
+    .stat-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:540px){
+    .stat-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- note / pull text inline ---------- */
+  .note{
+    max-width:var(--maxw);
+    margin:36px auto 0;
+    padding:0 24px;
+  }
+  .note .inner{
+    max-width:640px;
+    border-left:3px solid var(--rust);
+    background:linear-gradient(90deg, rgba(217,156,44,0.1), transparent 60%);
+    padding:14px 18px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:19px;
+    color:var(--ink-soft);
+    line-height:1.55;
+  }
+
+  /* ---------- rack (comparison) ---------- */
+  .rack-scroll{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 24px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+  }
+  .rack{
+    display:flex;
+    gap:18px;
+    padding-bottom:10px;
+    min-width:min-content;
+  }
+  .rack-card{
+    flex:0 0 248px;
+    background:var(--kraft);
+    border:1px solid rgba(21,19,13,0.18);
+    border-radius:2px;
+    padding:0;
+    overflow:hidden;
+    box-shadow:0 2px 0 rgba(21,19,13,0.05);
+    transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
+  }
+  .rack-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 16px 24px rgba(21,19,13,0.16);
+  }
+  .rack-photo{
+    height:150px;
+    background:repeating-linear-gradient(135deg, rgba(21,19,13,0.06) 0 10px, transparent 10px 20px);
+    border-bottom:1px solid rgba(21,19,13,0.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:14px;
+  }
+  .rack-photo span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.05em;
+    color:var(--ink-soft);
+    line-height:1.5;
+    text-transform:uppercase;
+  }
+  .rack-photo.duo span{
+    color:rgba(255,255,255,0.95);
+    text-shadow:0 1px 4px rgba(0,0,0,0.35);
+  }
+  .duo-blue{ background:linear-gradient(135deg,#1f5f8b,#3aa0c9); border-bottom-color:transparent; }
+  .duo-red{ background:linear-gradient(135deg,#7a1f1f,#c23b2b); border-bottom-color:transparent; }
+  .duo-green{ background:linear-gradient(135deg,#1f6b3a,#3aa05a); border-bottom-color:transparent; }
+  .duo-dark{ background:linear-gradient(135deg,#262626,#6b1f1f); border-bottom-color:transparent; }
+  .duo-purple{ background:linear-gradient(135deg,#4a2a6b,#7a4fae); border-bottom-color:transparent; }
+  .duo-lime{ background:linear-gradient(135deg,#225c22,#5a9c2f); border-bottom-color:transparent; }
+  .rack-body{ padding:16px 16px 18px; }
+  .rack-body h3{
+    font-size:19px;
+    margin-bottom:4px;
+  }
+  .rack-body .disc{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:var(--rust);
+    margin-bottom:10px;
+  }
+  .rack-body p{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-bottom:0;
+  }
+
+  /* ---------- prose blocks ---------- */
+  .prose{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 24px;
+  }
+  .prose .inner{ max-width:640px; }
+  .prose h4{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:21px;
+    margin:34px 0 10px;
+  }
+
+  /* ---------- seams list (philanthropy) ---------- */
+  .seams{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 24px;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .seam{
+    display:grid;
+    grid-template-columns:170px 1fr;
+    gap:24px;
+    padding:26px 0;
+    border-top:1px solid var(--line);
+    max-width:760px;
+  }
+  .seam:first-child{ border-top:none; padding-top:0; }
+  .seam .place{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--pine-deep);
+    font-weight:600;
+    padding-top:4px;
+  }
+  .seam .place small{
+    display:block;
+    color:var(--ink-soft);
+    font-weight:400;
+    margin-top:4px;
+    text-transform:none;
+    letter-spacing:0;
+  }
+  .seam p{
+    font-size:16.5px;
+    margin:0;
+    color:var(--ink);
+  }
+  @media (max-width:600px){
+    .seam{ grid-template-columns:1fr; gap:6px; }
+  }
+
+  /* ---------- counterpoint box ---------- */
+  .counter-box{
+    max-width:760px;
+    margin:0 auto 28px;
+    padding:28px 24px;
+    background:rgba(193,67,29,0.07);
+    border:1px solid rgba(193,67,29,0.35);
+    border-radius:4px;
+  }
+  .counter-box .eyebrow{ color:var(--rust); }
+  .counter-box .eyebrow::before{ background:var(--rust); }
+
+  /* ---------- closing ---------- */
+  .closing{
+    background:var(--ink);
+    color:var(--canvas);
+    padding:80px 24px 70px;
+    margin-top:10px;
+  }
+  .closing .wrap{ max-width:640px; }
+  .closing .eyebrow{ color:var(--sky); }
+  .closing .eyebrow::before{ background:var(--sky); }
+  .closing h2{
+    color:var(--canvas);
+    font-size:clamp(30px,5vw,44px);
+    margin:14px 0 24px;
+  }
+  .closing p{ color:rgba(239,232,216,0.88); font-size:18px; }
+  .closing p.final{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:21px;
+    color:var(--gold);
+    margin-top:28px;
+    border-top:1px solid rgba(217,156,44,0.3);
+    padding-top:24px;
+  }
+
+  /* ---------- colophon / footer ---------- */
+  footer.colophon{
+    background:var(--canvas-deep);
+    padding:48px 24px 60px;
+    border-top:1px solid var(--line);
+  }
+  footer.colophon .wrap{ max-width:640px; }
+  footer.colophon h5{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  footer.colophon p{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  footer.colophon .sources{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    line-height:1.8;
+  }
+
+  .clamp-quote{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(24px,3.4vw,32px);
+    line-height:1.3;
+    color:var(--ink);
+    max-width:760px;
+    margin:0 auto 60px;
+    padding:38px 24px;
+    position:relative;
+    text-align:center;
+  }
+  .clamp-quote::before{
+    content:"“";
+    display:block;
+    font-family:'Fraunces', serif;
+    font-size:64px;
+    color:var(--gold);
+    line-height:1;
+    margin-bottom:6px;
+  }
+  .clamp-quote .who{
+    display:block;
+    margin-top:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:500;
+    font-size:12px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header class="top">
+  <span>ANTES DE LLAMARLO EL MEJOR</span>
+  <span>24·06·2026</span>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="ghost-num" aria-hidden="true">39</span>
+  <div class="wrap">
+    <div class="eyebrow">Ensayo editorial · sobre grandeza deportiva</div>
+    <h1><span>Antes de</span><span>llamarlo el mejor</span></h1>
+    <p class="dek">Apuntes sobre Lionel Messi: los números que se pueden contar y los gestos que casi nadie contó.</p>
+    <div class="hero-meta">
+      <span><b>39</b> años hoy</span>
+      <span><b>18</b> goles mundialistas — récord histórico</span>
+      <span><b>8</b> Balones de Oro</span>
+      <span><b>47</b> títulos oficiales</span>
+    </div>
+    <div class="scroll-cue"><span class="arrow">↓</span> seguí leyendo</div>
+  </div>
+</section>
+
+<div class="intro reveal">
+  <div class="wrap">
+    <p class="lead">No confío mucho en los rankings. Reducen una vida entera a una casilla y una flecha: arriba o abajo. Pero hoy es 24 de junio de 2026. Lionel Messi cumple 39 años en plena Copa del Mundo, dos días después de convertirse —sin distinción de género— en el máximo goleador en la historia de los Mundiales: superó a Miroslav Klose y a Marta Vieira da Silva, la delantera brasileña que hasta entonces tenía ese récord absoluto. El mundo, una vez más, se hace la misma pregunta: ¿es el mejor deportista que haya existido?</p>
+    <p>Quien haya estado en una calle argentina la tarde del 18 de diciembre de 2022 sabe que esa pregunta, en este país, no es del todo justa. Aquel título no fue solo una copa: fueron treinta y seis años de espera convertidos, durante una tarde, en la postal más feliz que mucha gente recuerde. Abuelos que vieron perder tres finales se la cruzaron de generación, en vivo, a nietos que todavía no sabían bien por qué llorar. Eso no entra en ningún ranking, pero conviene tenerlo presente antes de hablar de números.</p>
+    <p>No voy a responder la pregunta rápido. Las cosas que importan no se responden rápido: se examinan, dato por dato, gesto por gesto, hasta donde alcance la evidencia. Eso es lo que sigue: los números a la vista, los defectos a la vista, y algunas cosas que Messi hizo sin pedirle permiso a una cámara.</p>
+  </div>
+</div>
+
+<!-- SECTION 1: DATA -->
+<section id="ficha">
+  <div class="section-head reveal">
+    <div class="eyebrow">01 · Lo que se puede medir</div>
+    <h2>Los números</h2>
+    <div class="wrap">
+      <p>Hay una parte de cualquier grandeza que se puede medir con precisión: lo que se ganó, lo que se anotó, lo que quedó registrado en un papel oficial. Empecemos por ahí, porque ignorar los números sería tan deshonesto como quedarse solo con ellos.</p>
+    </div>
+  </div>
+
+  <div class="stat-feature reveal">
+    <div class="inner">
+      <div class="sf-num tag-num" data-count="8">0</div>
+      <div>
+        <div class="sf-label">Balones de Oro</div>
+        <div class="sf-desc">Récord absoluto. Ningún futbolista, hombre o mujer, tiene más.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-grid reveal">
+    <div class="tag">
+      <div class="tag-num" data-count="47">0</div>
+      <div class="tag-label">Títulos oficiales</div>
+      <div class="tag-desc">Más que cualquier otro jugador — y más que cualquier club— en la historia del fútbol.</div>
+    </div>
+    <div class="tag">
+      <div class="tag-num" data-count="18">0</div>
+      <div class="tag-label">Goles en Mundiales</div>
+      <div class="tag-desc">Máximo goleador histórico de la Copa del Mundo, sin distinción de género. Superó a Klose y a Marta Vieira da Silva el 22 de junio de 2026.</div>
+    </div>
+    <div class="tag">
+      <div class="tag-num" data-count="6">0</div>
+      <div class="tag-label">Mundiales jugados</div>
+      <div class="tag-desc">Primer hombre en disputar seis ediciones. Capitán de Argentina en cinco de ellas.</div>
+    </div>
+    <div class="tag">
+      <div class="tag-num" data-count="900" data-prefix="+">0</div>
+      <div class="tag-label">Goles en su carrera</div>
+      <div class="tag-desc">Entre clubes y selección. A este ritmo, llegaría a los 1.000 antes de retirarse.</div>
+    </div>
+    <div class="tag">
+      <div class="tag-num" data-count="1">0</div>
+      <div class="tag-label">Copa del Mundo</div>
+      <div class="tag-desc">Qatar 2022. La que le faltaba en la vitrina, conseguida liderando, no solo jugando.</div>
+    </div>
+  </div>
+
+  <div class="note reveal">
+    <div class="inner">No hay truco en estos números. Pero un número, solo, no explica nada: solo informa.</div>
+  </div>
+</section>
+
+<div class="divider reveal"><div class="ln"></div><span>otros nombres</span><div class="ln"></div></div>
+
+<!-- COMPARISON RACK -->
+<section id="comparacion">
+  <div class="section-head reveal">
+    <div class="eyebrow">02 · Otros nombres en la conversación</div>
+    <h2>Quién más se sienta a esta mesa</h2>
+    <div class="wrap">
+      <p>Pongamos, al lado, a quienes siempre aparecen en esta discusión. No para que pierdan: para entender que compiten bajo reglas distintas, y que comparar a un nadador con un futbolista es, en rigor, comparar dos lenguajes distintos de la excelencia.</p>
+    </div>
+  </div>
+
+  <div class="rack-scroll reveal">
+    <div class="rack">
+
+      <div class="rack-card">
+        <div class="rack-photo duo-blue duo"><span>Espacio para fotografía<br>Michael Phelps</span></div>
+        <div class="rack-body">
+          <div class="disc">Natación · EE. UU.</div>
+          <h3>Michael Phelps</h3>
+          <p>28 medallas olímpicas, 23 de oro. El medallero más grande de la historia de los Juegos, en cualquier disciplina.</p>
+        </div>
+      </div>
+
+      <div class="rack-card">
+        <div class="rack-photo duo-red duo"><span>Espacio para fotografía<br>Michael Jordan</span></div>
+        <div class="rack-body">
+          <div class="disc">Básquetbol · EE. UU.</div>
+          <h3>Michael Jordan</h3>
+          <p>6 anillos de la NBA, 6 veces MVP de las Finales. Ganó cada final que jugó completa.</p>
+        </div>
+      </div>
+
+      <div class="rack-card">
+        <div class="rack-photo duo-green duo"><span>Espacio para fotografía<br>Pelé</span></div>
+        <div class="rack-body">
+          <div class="disc">Fútbol · Brasil</div>
+          <h3>Pelé</h3>
+          <p>3 Copas del Mundo. Sigue siendo el único futbolista con esa cifra.</p>
+        </div>
+      </div>
+
+      <div class="rack-card">
+        <div class="rack-photo duo-dark duo"><span>Espacio para fotografía<br>Muhammad Ali</span></div>
+        <div class="rack-body">
+          <div class="disc">Boxeo · EE. UU.</div>
+          <h3>Muhammad Ali</h3>
+          <p>3 veces campeón mundial de los pesados. Convirtió el ring en tribuna política, algo que ningún otro nombre de esta lista hizo con ese costo personal.</p>
+        </div>
+      </div>
+
+      <div class="rack-card">
+        <div class="rack-photo duo-purple duo"><span>Espacio para fotografía<br>Serena Williams</span></div>
+        <div class="rack-body">
+          <div class="disc">Tenis · EE. UU.</div>
+          <h3>Serena Williams</h3>
+          <p>23 títulos de Grand Slam. Redefinió la potencia, la presencia y la permanencia en el tenis femenino.</p>
+        </div>
+      </div>
+
+      <div class="rack-card">
+        <div class="rack-photo duo-lime duo"><span>Espacio para fotografía<br>Usain Bolt</span></div>
+        <div class="rack-body">
+          <div class="disc">Atletismo · Jamaica</div>
+          <h3>Usain Bolt</h3>
+          <p>Récords vigentes en 100 m (9.58s) y 200 m (19.19s). 8 oros olímpicos. Nadie corrió más rápido jamás.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="note reveal">
+    <div class="inner">La verdad incómoda de estas comparaciones es que miden cosas distintas. Phelps compite en hasta ocho finales por Juego Olímpico; un futbolista juega una final de Mundial cada cuatro años, si llega. No es injusticia, es aritmética. Por eso cualquier ranking absoluto es, casi siempre, una opinión disfrazada de tabla.</div>
+  </div>
+</section>
+
+<!-- SECTION: ARGENTINA -->
+<section class="argentina">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <div class="eyebrow">03 · Antes de Messi, hubo otros</div>
+      <h2>Lo que ya sabíamos hacer</h2>
+      <p>Hay una casualidad de calendario que vale la pena contar. Hoy, mientras Messi cumple 39, se cumplen también 115 años del nacimiento de Juan Manuel Fangio, el primer argentino en ser, sin discusión posible, el mejor del mundo en lo suyo. Entre uno y otro hubo más nombres. Conviene presentarlos — no para repartir medallas entre compatriotas, sino para entender que la grandeza de Messi no nació de la nada: nació en un país que ya sabía, mucho antes que él, cómo se hace esto.</p>
+    </div>
+
+    <div class="ar-grid reveal">
+      <div class="ar-card">
+        <div class="ar-year">1951–57</div>
+        <h3>Juan Manuel Fangio</h3>
+        <div class="ar-sport">Automovilismo</div>
+        <p>5 campeonatos mundiales de Fórmula 1 con 4 escuderías distintas. Ganó el 47% de las carreras que disputó, un porcentaje que sigue siendo récord. Su marca de títulos aguantó 46 años, hasta que Schumacher la igualó en 2003.</p>
+        <p>Dominó subido a autos de otros, como Messi dominó vistiendo camisetas de otros: Barcelona, París, Miami, la Selección. El talento, cuando es de ese tamaño, no depende del vehículo.</p>
+      </div>
+
+      <div class="ar-card">
+        <div class="ar-year">1986</div>
+        <h3>Diego Armando Maradona</h3>
+        <div class="ar-sport">Fútbol</div>
+        <p>Capitán y figura excluyente del único título mundial argentino antes de 2022. El gol a Inglaterra en México 86 fue votado por la FIFA como el mejor de la historia. También cargó dos sanciones por dopaje y una adicción que lo acompañó hasta su muerte en 2020.</p>
+        <p>Es la comparación más citada y la más fácil de hacer mal. Maradona fue el genio caótico que llevó a un equipo entero sobre los hombros; Messi es la versión disciplinada y longeva de esa misma genialidad. Ninguno sustituye al otro.</p>
+      </div>
+
+      <div class="ar-card">
+        <div class="ar-year">2004</div>
+        <h3>Manu Ginóbili</h3>
+        <div class="ar-sport">Básquetbol</div>
+        <p>4 anillos de la NBA con San Antonio Spurs, oro olímpico en Atenas 2004 derrotando a Estados Unidos en semifinales —MVP del torneo— y, en 2022, el primer argentino en el Salón de la Fama. Solo un puñado de jugadores en la historia mundial reúne ese combo.</p>
+        <p>Fue, durante años, "sexto hombre" por decisión propia antes que por imposición: el que entraba desde el banco a resolver lo que los titulares no podían. Una humildad funcional que Messi, a su manera, también terminó adoptando dentro del vestuario.</p>
+      </div>
+
+      <div class="ar-card">
+        <div class="ar-year">1990</div>
+        <h3>Gabriela Sabatini</h3>
+        <div class="ar-sport">Tenis</div>
+        <p>Primera argentina en ganar un Grand Slam individual (US Open 1990, venciendo a Steffi Graf). Medalla de plata en Seúl 1988 siendo abanderada a los 18 años. Llegó a ser N.º 3 del mundo, con 27 títulos.</p>
+        <p>Abrió, en un país obsesionado con el fútbol, un lugar para otro deporte y para las mujeres en la élite. Como Messi, evitaba las entrevistas que no quería dar; como él, terminó su carrera ligada a UNICEF.</p>
+      </div>
+    </div>
+
+    <p class="ar-note">Ninguno de estos cuatro nombres necesita a Messi para justificar su lugar en la historia. Pero a Messi le sirve estar parado sobre estos hombros: nació en un país que, mucho antes de que él pisara una cancha, ya sabía que se podía ser el mejor del mundo en algo. Eso no se entrena. Se hereda.</p>
+  </div>
+</section>
+
+<!-- SECTION 2: SOFT / BEHAVIOR -->
+<section id="caracter">
+  <div class="section-head reveal">
+    <div class="eyebrow">04 · Lo que no entra en una estadística</div>
+    <h2>El carácter, puesto a prueba</h2>
+    <div class="wrap">
+      <p>Ninguna estadística dice cómo reacciona alguien bajo presión, ni qué hace cuando gana, ni qué hace cuando pierde. Eso se aprende con el tiempo, no con un anuncio. Con las personas pasa así: el carácter se nota en lo que se repite, no en lo que se promete.</p>
+    </div>
+  </div>
+
+  <div class="prose reveal">
+    <div class="inner">
+      <p>Messi habla poco. En más de veinte años de carrera profesional no hay un escándalo de vestuario armado, una entrevista incendiaria, una polémica que él mismo haya encendido. Mantiene, casi intacto, el círculo de la infancia: Antonela Roccuzzo, su pareja desde que ambos eran chicos en el mismo barrio de Rosario; sus tres hijos; los amigos de siempre. La fama, en su caso, no le cambió el domicilio emocional.</p>
+
+      <p>En el Mundial de 2022 algo se movió en su rol dentro del equipo: dejó de ser solamente el mejor jugador para convertirse, también, en la voz del vestuario — discutió con rivales cuando hubo que discutir, defendió en público a los más jóvenes del plantel, sostuvo conferencias de prensa enteras cuando el equipo lo necesitaba. No fue siempre así: en mundiales anteriores se lo había señalado, justamente, por callado. Aprendió, ya pasados los 35 años, un oficio nuevo: el de liderar en voz alta cuando todo en su currículum pedía silencio.</p>
+
+      <p>Sigue disputando los noventa minutos a los 39 años, en una liga que podría haber elegido simplemente para retirarse caminando, y en cambio entrena doble turno con su amigo y compañero Rodrigo De Paul para llegar entero a una Copa del Mundo más.</p>
+
+      <p>Comparado con otras leyendas, su manera de ejercer la grandeza es distinta — y conviene decirlo sin jerarquía, porque no hay una forma mejor o peor de hacerlo, hay formas distintas. Ali necesitó el megáfono y la confrontación pública para cambiar su deporte y a su país. Jordan necesitó una competitividad casi feroz para encontrar su propio límite. Maradona necesitó el caos para ser genio. Messi no necesitó nada de eso. Y quizás por eso su grandeza sea más difícil de noticiar: no vende tanto una foto de alguien que no grita.</p>
+    </div>
+  </div>
+</section>
+
+<div class="clamp-quote reveal">
+  Lo que de verdad dice quién es alguien no es lo que cuenta en una entrevista. Es lo que hizo cuando no había cámara, o cuando la cámara miraba para otro lado.
+</div>
+
+<!-- SECTION 3: PHILANTHROPY -->
+<section id="gestos">
+  <div class="section-head reveal">
+    <div class="eyebrow">05 · Lo que no se anunció</div>
+    <h2>Ocho gestos sin cámara</h2>
+    <div class="wrap">
+      <p>Esto no es una lista de buenas obras para quedar bien. Es, literalmente, lo que se pudo encontrar después de buscar más allá del comunicado oficial — la parte de la fundación que no necesitó vocero.</p>
+    </div>
+  </div>
+
+  <div class="seams reveal">
+
+    <div class="seam">
+      <div class="place">Siria<small>2010s</small></div>
+      <p>Mucho antes de ganar un Mundial, financió en secreto el tratamiento hormonal de Waleed Kashash, un chico sirio con la misma condición de crecimiento que él tuvo de niño: 208 euros cada quince días, durante años. No hubo comunicado de la fundación. Se supo porque lo contó la familia del chico, no porque lo anunciara Messi.</p>
+    </div>
+
+    <div class="seam">
+      <div class="place">Nepal<small>vía Fundación Leo Messi</small></div>
+      <p>Su fundación construyó 14 centros de salud en comunidades rurales nepalíes, lejos de cualquier estadio y de cualquier cámara de televisión.</p>
+    </div>
+
+    <div class="seam">
+      <div class="place">Norte argentino<small>comunidades originarias</small></div>
+      <p>Financió el acceso a agua potable en comunidades aborígenes de Argentina. No hay foto de Messi cortando una cinta. Solo hay una cañería que antes no estaba.</p>
+    </div>
+
+    <div class="seam">
+      <div class="place">Rosario<small>su propio barrio</small></div>
+      <p>Donó una silla de ruedas motorizada a un vecino de Rosario. El único registro público de ese gesto es un agradecimiento local — no un posteo, no una nota.</p>
+    </div>
+
+    <div class="seam">
+      <div class="place">Buenos Aires<small>Hogar Convivencial</small></div>
+      <p>Reconstruyó y equipó por completo un hogar convivencial para chicos en situación de calle.</p>
+    </div>
+
+    <div class="seam">
+      <div class="place">Siria<small>con UNICEF</small></div>
+      <p>Entregó 50.630 kits educativos a niños y niñas desplazados por la guerra. La lógica, dijo su fundación, fue simple: a él la educación también le costó cara, y no por dinero.</p>
+    </div>
+
+    <div class="seam">
+      <div class="place">Barcelona y Argentina<small>2020, pandemia</small></div>
+      <p>Donó al Hospital Clínic de Barcelona y, después, 500.000 euros a la Fundación Garrahan que terminaron repartidos en silencio entre seis hospitales públicos argentinos: respiradores, monitores, bombas de infusión. La mayoría de esos hospitales nunca llegó a un titular.</p>
+    </div>
+
+    <div class="seam">
+      <div class="place">Desde 2010<small>embajador de UNICEF</small></div>
+      <p>Es embajador de UNICEF desde 2010. Todavía no había ganado un Mundial. Lo hizo antes de necesitarlo para la foto.</p>
+    </div>
+
+  </div>
+
+  <div class="note reveal">
+    <div class="inner">Nada de esto suma puntos en una estadística oficial. Pero es, quizás, lo que de verdad sostiene una reputación con el paso del tiempo.</div>
+  </div>
+</section>
+
+<div class="stinger reveal">
+  <p>Pero ser objetivo también significa lo que sigue.</p>
+</div>
+
+<!-- SECTION 4: COUNTERPOINT -->
+<section id="reverso">
+  <div class="section-head reveal">
+    <div class="eyebrow">06 · El contrapeso</div>
+    <h2>Lo que la objetividad obliga a decir</h2>
+    <div class="wrap">
+      <p>Ser objetivo no es elegir un lado y defenderlo bien. Es no esconder lo que incomoda, aunque el resto del cuadro sea casi impecable.</p>
+    </div>
+  </div>
+
+  <div class="counter-box reveal">
+    <div class="eyebrow">Condena confirmada · España, 2013–2017</div>
+    <p style="margin-top:14px; color:var(--ink); font-size:16px;">La Audiencia de Barcelona, y luego el Tribunal Supremo de España, condenaron a Messi y a su padre por tres delitos fiscales: usaron una red de sociedades en Reino Unido, Suiza, Belice y Uruguay para eludir impuestos sobre 4,1 millones de euros provenientes de sus derechos de imagen entre 2007 y 2009. La pena fue de 21 meses de prisión —suspendida, como es habitual en España para condenas menores a dos años sin antecedentes— y una multa de 2 millones de euros. Devolvió el dinero defraudado antes del juicio. No es un detalle menor ni un saldo emocional: es una condena penal confirmada por el máximo tribunal de un país, y un ensayo objetivo tiene que decirlo con la misma claridad con la que cuenta los goles.</p>
+  </div>
+
+  <div class="prose reveal">
+    <div class="inner">
+      <p>También vale la pena decir que comparar a Messi con Phelps, con Bolt o con Ali es, en rigor, comparar dos sistemas de medida distintos: cada deporte mide la grandeza con su propia vara, con calendarios, formatos y niveles de exposición mediática que no son equivalentes entre sí. Cualquiera que diga tener la respuesta definitiva a «quién es el mejor deportista de la historia» está, casi siempre, dándote su gusto personal disfrazado de certeza matemática.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="wrap reveal">
+    <div class="eyebrow">Cierre</div>
+    <h2>Lo que queda</h2>
+    <p>¿Es Messi el mejor deportista de la historia? No lo sé, y desconfío de cualquiera que te lo diga sin matices. Comparar disciplinas, épocas y formatos distintos es, en el fondo, un ejercicio de gusto personal con vocabulario de tabla estadística.</p>
+    <p>Lo que sí puedo decirte es esto: pocas personas llegan a los 39 años, en la cima absoluta de su oficio, sin haber cambiado de pareja, de amigos ni de barrio. Pocas fundaciones eligen el centro de salud sin cámaras antes que el evento con alfombra roja. Y pocos atletas, a esta altura del partido, todavía corren los noventa minutos enteros un martes cualquiera de mayo, sin que nadie se los esté pidiendo.</p>
+    <p class="final">Hoy cumple 39. Sigue jugando. Sigue siendo, según cuenta su gente y no su prensa, la misma persona que era antes del primer Balón de Oro. Eso no entra en ninguna tabla comparativa.</p>
+    <p>Y hay algo más, que no es un dato pero tampoco es poca cosa: en algún rincón de una cancha, esta misma tarde, hay padres señalándole la pantalla a sus hijos de la misma manera en que alguna vez sus propios padres les señalaron a Maradona. Ese gesto —mirá, esto no lo vas a volver a ver igual— se repite ahora con un nombre distinto, en el mismo país. Si alguna vez te preguntás cómo se construye una leyenda que dure, probablemente sea así: en silencio, gesto por gesto, durante veinte años, cuando nadie estaba mirando, hasta que un día alguien te agarra del hombro y te dice mirá, prestá atención a este.</p>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="wrap">
+    <h5>Nota editorial</h5>
+    <p>Esta pieza no incluye fotografías reales de los deportistas mencionados. No por falta de cariño hacia la historia, sino por una política de derechos de imagen de figuras públicas que esta herramienta respeta. En su lugar, dejamos tarjetas de datos. Los espacios marcados «Espacio para fotografía» están pensados para que reemplaces cada uno por una imagen real, con la licencia correspondiente, si vas a usar esta pieza fuera de este chat.</p>
+    <h5>Fuentes consultadas</h5>
+    <p class="sources">Wikipedia (es/en) · Infobae · Goal.com · El Colombiano · Diario UNO (Mendoza) · CNN en Español · Bekia Actualidad · Público.es · La Nación · Noticias Jurídicas · Ámbito Financiero · ESPN Argentina · UNICEF Argentina · Fundación Konex · Museo Fangio · El Cronista — actualizado a junio de 2026.</p>
+  </div>
+</footer>
+
+<script>
+  // reading progress + sticky header shadow
+  const bar = document.getElementById('progress');
+  const headerEl = document.querySelector('header.top');
+  function updateProgress(){
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = (isFinite(scrolled) ? scrolled : 0) + '%';
+    if(h.scrollTop > 12){ headerEl.classList.add('scrolled'); }
+    else{ headerEl.classList.remove('scrolled'); }
+  }
+  document.addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+
+  // scroll reveal
+  const items = document.querySelectorAll('.reveal');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if('IntersectionObserver' in window){
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    items.forEach(i=>obs.observe(i));
+
+    // count-up numbers, triggered the moment their tag becomes visible
+    const counters = document.querySelectorAll('.tag-num[data-count]');
+    const countObs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          animateCount(e.target);
+          countObs.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.4});
+    counters.forEach(c=>countObs.observe(c));
+  } else {
+    items.forEach(i=>i.classList.add('visible'));
+    document.querySelectorAll('.tag-num[data-count]').forEach(c=>{
+      c.textContent = (c.dataset.prefix||'') + c.dataset.count;
+    });
+  }
+
+  function animateCount(el){
+    const target = parseInt(el.dataset.count, 10);
+    const prefix = el.dataset.prefix || '';
+    if(reduceMotion){ el.textContent = prefix + target; return; }
+    const duration = 1100;
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + Math.round(eased * target);
+      if(p < 1){ requestAnimationFrame(tick); }
+    }
+    requestAnimationFrame(tick);
+  }
+</script>
+
+</body>
+</html>
